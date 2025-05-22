@@ -1,45 +1,48 @@
-import React from 'react';
 import type { Recipe } from '../App';
-// Props expected from parent
+
 type Props = {
   recipe: Recipe;
   onDelete: (id: number) => void;
   onToggleFavorite: (id: number) => void;
 };
 
-const RecipeCard: React.FC<Props> = ({ recipe, onDelete, onToggleFavorite }) => {
+// This component displays the information for a single recipe
+function RecipeCard({ recipe, onDelete, onToggleFavorite }: Props) {
   return (
-    <div className="card mb-3 shadow-sm">
+    <div className="card shadow-sm">
       <div className="card-body">
-        <h3 className="card-title d-flex justify-content-between align-items-center">
-          {recipe.name}
-          {/* Heart icon to indicate favorite */}
-          <span
-            style={{ cursor: 'pointer', color: recipe.favorite ? 'red' : 'gray' }}
-            onClick={() => onToggleFavorite(recipe.id)}
-            title="Toggle Favorite"
-          >
-            
-          </span>
-        </h3>
+        <h5 className="card-title">
+          {recipe.name}{' '}
+          {recipe.favorite && <span className="text-warning">(Favorite)</span>}
+        </h5>
 
-        <h5>Ingredients:</h5>
+        <h6>Ingredients:</h6>
         <ul>
-          {recipe.ingredients.map((item, index) => (
-            <li key={index}>{item}</li>
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
           ))}
         </ul>
 
-        <h5>Instructions:</h5>
-        <p>{recipe.instructions}</p>
+        <p>
+          <strong>Instructions:</strong> {recipe.instructions}
+        </p>
 
-        {/* Delete button */}
-        <button className="btn btn-danger" onClick={() => onDelete(recipe.id)}>
-           Delete Recipe
+        {/* Buttons to toggle favorite and delete recipe */}
+        <button
+          className="btn btn-outline-warning me-2"
+          onClick={() => onToggleFavorite(recipe.id)}
+        >
+          {recipe.favorite ? 'Unfavorite' : 'Favorite'}
+        </button>
+        <button
+          className="btn btn-outline-danger"
+          onClick={() => onDelete(recipe.id)}
+        >
+          Delete
         </button>
       </div>
     </div>
   );
-};
+}
 
 export default RecipeCard;

@@ -1,68 +1,67 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Header from './components/Header';
 import RecipeList from './components/RecipeList';
-import { recipes as testData } from './data/recipes'; // Static test data
+import { testData } from './testData';
 
-// Define recipe type for clarity
+// Define the shape of a Recipe object using TypeScript
 export type Recipe = {
   id: number;
   name: string;
   ingredients: string[];
   instructions: string;
-  favorite?: boolean; // NEW: Optional flag for toggling favorite
+  favorite?: boolean;
 };
 
-const App: React.FC = () => {
-  // Create state variable with initial test data
+function App() {
+  // Set up state to manage the list of recipes
   const [recipes, setRecipes] = useState<Recipe[]>(testData);
 
-  // ✅ CREATE: Add a new hardcoded recipe
-  const addRecipe = () => {
+  // Add a new recipe (static content for now)
+  const handleAdd = () => {
     const newRecipe: Recipe = {
-      id: Date.now(), // Unique ID based on timestamp
-      name: "Peanut Butter & Jelly",
-      ingredients: ["Bread", "Peanut Butter", "Jelly"],
-      instructions: "Spread peanut butter and jelly between slices of bread.",
+      id: Date.now(), // Unique ID
+      name: 'New Recipe',
+      ingredients: ['ingredient 1', 'ingredient 2'],
+      instructions: 'Do something tasty',
       favorite: false,
     };
-
-    // Use spread syntax to copy old recipes and add the new one
+    // Update state with new recipe added to the array
     setRecipes([...recipes, newRecipe]);
   };
 
-  // ✅ DELETE: Remove a recipe by ID
-  const deleteRecipe = (id: number) => {
-    const updated = recipes.filter((r) => r.id !== id);
+  // Delete a recipe by ID
+  const handleDelete = (id: number) => {
+    const updated = recipes.filter((recipe) => recipe.id !== id);
     setRecipes(updated);
   };
 
-  // ✅ UPDATE: Toggle favorite property by ID
-  const toggleFavorite = (id: number) => {
-    const updated = recipes.map((r) =>
-      r.id === id ? { ...r, favorite: !r.favorite } : r
+  // Toggle the "favorite" property of a recipe
+  const handleToggleFavorite = (id: number) => {
+    const updated = recipes.map((recipe) =>
+      recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
     );
     setRecipes(updated);
   };
 
   return (
-    <>
+    <div>
       <Header />
-      
-      {/* Add Recipe button for testing create feature */}
-      <div className="text-center my-3">
-        <button className="btn btn-success" onClick={addRecipe}>
-          ➕ Add New Recipe
-        </button>
-      </div>
 
-      {/* Pass down recipes and handlers as props */}
-      <RecipeList
-        recipes={recipes}
-        onDelete={deleteRecipe}
-        onToggleFavorite={toggleFavorite}
-      />
-    </>
+      <div className="container mt-4">
+        {/* Button to add a new recipe */}
+        <button className="btn btn-primary mb-3" onClick={handleAdd}>
+          Add Recipe
+        </button>
+
+        {/* Pass data and handlers down to the RecipeList component */}
+        <RecipeList
+          recipes={recipes}
+          onDelete={handleDelete}
+          onToggleFavorite={handleToggleFavorite}
+        />
+      </div>
+    </div>
   );
-};
+}
 
 export default App;
