@@ -1,24 +1,26 @@
 import React from 'react';
-import RecipeCard from './RecipeCard'; // ✅ Import the new component
+import RecipeCard from './RecipeCard';
+import type { Recipe } from '../App';
 
-type Recipe = {
-  id: number;
-  name: string;
-  ingredients: string[];
-  instructions: string;
-};
-
+// Define props passed to RecipeList
 type Props = {
   recipes: Recipe[];
+  onDelete: (id: number) => void;
+  onToggleFavorite: (id: number) => void;
 };
 
-const RecipeList: React.FC<Props> = ({ recipes }) => {
+const RecipeList: React.FC<Props> = ({ recipes, onDelete, onToggleFavorite }) => {
   return (
     <div className="container my-5">
-      <h2 className="mb-4">Mama K's Recipes</h2>
-      {/* Loop through recipes and render a RecipeCard for each */}
+      <h2 className="mb-4">Recipes</h2>
+      {/* Map over each recipe and pass handlers to RecipeCard */}
       {recipes.map((recipe) => (
-        <RecipeCard key={recipe.id} recipe={recipe} />
+        <RecipeCard
+          key={recipe.id}
+          recipe={recipe}
+          onDelete={onDelete}
+          onToggleFavorite={onToggleFavorite}
+        />
       ))}
     </div>
   );
