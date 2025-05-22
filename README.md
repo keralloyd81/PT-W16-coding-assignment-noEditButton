@@ -1,4 +1,5 @@
 "# PT-W15-coding-assignment" 
+
 ### * This app has been created, designed and manipulated with the help of AI. *
 
 # Instructions:
@@ -6,51 +7,34 @@ This week you’ll make your app dynamic with state! We’ll implement the abili
 
 ## Task 1: Move your test data into state
 Time to make a state variable!
-
 You can leave your test data wherever it is, and create the state with the test data as the initial value.
-
 Maybe something like this:
-
 const [list, setList] = useState(TEST_DATA)
-
 You’ll need to update the rest of the app to use the state instead of the test data. You’ll probably need to pass things down through props for it all to be hooked up properly.
 
 ## Task 2: Implement the create ability
 Add the ability to create new items in your app. 
-
 For now the new items won’t be dynamic, because we haven’t learned how to build React forms yet. Just have it always add an item with the same data.
-
 Make sure you’re setting the state to a copy of the array with the new item added.
 
 ## Task 3: Implement the delete ability
 Add the ability to delete items in your app.
-
 Make sure you’re setting the state to a copy of the array with the item deleted.
 
 ## Task 4: Implement the update ability
 Add the ability to update items in your app.
-
 For now pick something simple to update, like a boolean value. Maybe toggle whether the item is starred, completed, hearted, etc. The user could use a button or buttons to make the update. We can do a full edit when we learn how to build React forms with inputs and things.
-
 Make sure you’re setting the state to a copy of the array with an updated copy of the object.
 
 ## Task 5: Test
 Make sure your app is working correctly by making changes to your test data. Create items, delete items, change properties on items, and make sure that the app is displaying exactly what the test data says it should.
-
 At this point, your project must meets these new requirements:
-
 A user can create new items (the new items will all have the same data)
-
 A user can delete items
-
 A user can update at least one property on the items
-
 As well as the requirements from last week:
-
 It has at least 3 React components
-
 It’s displaying the test data
-
 It’s using at least 1 prop
 
 The app does NOT need to connect to an API. So when the page is refreshed, all the changes will be lost. That’s not a problem, we’ll learn how to save to a backend soon.
