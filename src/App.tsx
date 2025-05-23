@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Header from './components/Header';
 import RecipeList from './components/RecipeList';
-import { testData } from './testData';
+import RecipeForm from './components/RecipeForm';
+import { testData } from './data/testData';
 
-// Define the shape of a Recipe object using TypeScript
+// Define a Recipe type (shared across components)
 export type Recipe = {
   id: number;
   name: string;
@@ -13,30 +14,21 @@ export type Recipe = {
 };
 
 function App() {
-  // Set up state to manage the list of recipes
+  // Main state for recipe data
   const [recipes, setRecipes] = useState<Recipe[]>(testData);
 
-  // Add a new recipe (static content for now)
-  const handleAdd = () => {
-    const newRecipe: Recipe = {
-      id: Date.now(), // Unique ID
-      name: 'New Recipe',
-      ingredients: ['ingredient 1', 'ingredient 2'],
-      instructions: 'Do something tasty',
-      favorite: false,
-    };
-    // Update state with new recipe added to the array
+  // Add new recipe to the list
+  const addRecipe = (newRecipe: Recipe) => {
     setRecipes([...recipes, newRecipe]);
   };
 
-  // Delete a recipe by ID
-  const handleDelete = (id: number) => {
-    const updated = recipes.filter((recipe) => recipe.id !== id);
-    setRecipes(updated);
+  // Delete a recipe
+  const deleteRecipe = (id: number) => {
+    setRecipes(recipes.filter((recipe) => recipe.id !== id));
   };
 
-  // Toggle the "favorite" property of a recipe
-  const handleToggleFavorite = (id: number) => {
+  // Toggle favorite status
+  const toggleFavorite = (id: number) => {
     const updated = recipes.map((recipe) =>
       recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
     );
@@ -44,23 +36,15 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <Header />
-
-      <div className="container mt-4">
-        {/* Button to add a new recipe */}
-        <button className="btn btn-primary mb-3" onClick={handleAdd}>
-          Add Recipe
-        </button>
-
-        {/* Pass data and handlers down to the RecipeList component */}
-        <RecipeList
-          recipes={recipes}
-          onDelete={handleDelete}
-          onToggleFavorite={handleToggleFavorite}
-        />
-      </div>
-    </div>
+      <RecipeForm addRecipe={addRecipe} />
+      <RecipeList
+        recipes={recipes}
+        onDelete={deleteRecipe}
+        onToggleFavorite={toggleFavorite}
+      />
+    </>
   );
 }
 
