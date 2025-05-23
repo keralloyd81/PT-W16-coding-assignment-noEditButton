@@ -96,7 +96,7 @@ Bootstrap is loaded from a CDN via the index.html file.
 
 This version uses placeholder content for new recipes. Forms and full data entry will be added in future assignments.
 
-Assignment Requirements (All check)
+Assignment Requirements (All ✅)
  App uses at least 3 React components
 
  Displays initial test data using props
